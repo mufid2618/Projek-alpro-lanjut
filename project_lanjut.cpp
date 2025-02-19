@@ -3,6 +3,7 @@
 #include <string>
 using namespace std;
 //pppppp
+/*kimochi*/
 const int maxx = 100;
 const int maxp = 100;
 
