@@ -155,6 +155,30 @@ void melihatbuku(){
     }
 }
 
+void caribuku(){
+    string bukuCari;
+    bool ditemukan = false;
+
+    cout << "Masukan judul buku yang dicari : ";
+    getline(cin>> ws, bukuCari );
+
+    for (int i = 0; i < 100; i++)
+    {
+        if (jenisBuku[i].buku == bukuCari ){
+            cout << "Buku dengan judul " <<   bukuCari << " berada pada urutan ke-" 
+            << i +1 << endl;
+            cout << "Harga     : " << jenisBuku[i].harga << endl;
+            cout << "Deskripsi : " << jenisBuku[i].deskripsi << endl;
+        
+            ditemukan = true;
+        }
+    }
+    if(!ditemukan){
+        cout << "Buku tidak ditemukan" << endl;
+    }
+
+}
+
 void checkoutbuku() {
     if (JumlahPelanggan == 0) {
         cout << "Belum ada pesanan yang terdaftar..\n";
@@ -262,7 +286,7 @@ void customer() {
     do {
         system("cls");
         cout << "\nMENU CUSTOMER\n";
-        cout << "1. Lihat Daftar Layanan\n2. Memilih menu layanan \n3. Melihat pesanan\n4. Checkout Pesanan\n5. Kembali ke Menu Utama\n>> ";
+        cout << "1. Lihat Daftar Layanan\n2. Memilih menu layanan \n3. Melihat pesanan\n4. Checkout Pesanan\n5. Mencari buku\n6. Kembali ke Menu Utama\n>> ";
         cin >> pilihan;
 
         switch (pilihan) {
@@ -270,7 +294,8 @@ void customer() {
         case 2: memilihbuku(); break;
         case 3: melihatbuku(); break;
         case 4: checkoutbuku(); break;
-        case 5:
+        case 5: caribuku();break;
+        case 6:
             return; //kembali ke menu utama
         default:
             cout << "Pilihan tidak valid. Silakan coba lagi.\n";
