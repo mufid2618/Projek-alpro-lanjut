@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <string>
 using namespace std;
-
+//nyoba di branch sal
 const int maxx = 100;
 const int maxp = 100;
 
