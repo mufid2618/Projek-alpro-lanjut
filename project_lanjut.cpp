@@ -31,18 +31,16 @@ struct Pelanggan {
     int IdPelanggan;
     int nmrpesanan[maxx]; // Menyimpan layanan yang dipesan
     int Jumlahbuku;
-};
+};Pelanggan pelanggan[maxp];
 
-Pelanggan pelanggan[maxp];
 int JumlahPelanggan = 0;
 
 // Struktur untuk login admin
 struct Admin {
     string username = "admin";
     string password = "1234";
-};
+};Admin admiin;
 
-Admin admiin;
 bool mengulang;
 int x;
 
@@ -155,6 +153,7 @@ void melihatbuku(){
     }
 }
 
+//searching
 void caribuku(){
     string bukuCari;
     bool ditemukan = false;
@@ -226,7 +225,7 @@ void customer() {
     do {
         system("cls");
         cout << "\nMENU CUSTOMER\n";
-        cout << "1. Lihat Daftar Layanan\n2. Memilih menu layanan \n3. Melihat pesanan\n4. Checkout Pesanan\n5. Mencari buku\n6. Kembali ke Menu Utama\n>> ";
+        cout << "1. Lihat Daftar Buku\n2. Memilih menu Buku \n3. Melihat Buku\n4. Checkout Pesanan\n5. Mencari buku\n6. Kembali ke Menu Utama\n>> ";
         cin >> pilihan;
 
         switch (pilihan) {
@@ -284,16 +283,17 @@ void admin(Admin adminku , int kesempatan) {
     //     exit(0);
     // }
     // }while(mengulang==true);
+
+    if(kesempatan == 0){//ngecek dulu kesempatannya 0 atau bukan, kalo iya bakal selesai/keluar program
+        cout << "Kesempatan anda telah habis, anda keluar dari program!!";
+        exit(0);
+    }
+    
     cout << "\n=== LOGIN ADMIN ===" << endl;
     cout << "Username: ";
     cin >> username;
     cout << "Password: ";
     cin >> password;
-
-    if(kesempatan == 0){
-        cout << "Kesempatan anda telah habis, anda keluar dari program!!";
-        exit(0);
-    }
 
     if (username == adminku.username && password == adminku.password) {
         cout << "\nLogin berhasil! Selamat datang, Admin.\n";
@@ -304,10 +304,9 @@ void admin(Admin adminku , int kesempatan) {
         return;
     }
 
-
     do {
         cout << "\nMENU ADMIN\n";
-        cout << "1. Lihat Daftar Layanan\n2. Tambah layanan\n3. Edit layanan\n4. Hapus layanan\n5. Kembali ke Menu Utama\n>> ";
+        cout << "1. Lihat Daftar Buku\n2. Tambah Buku\n3. Edit Buku\n4. Hapus Buku\n5. Kembali ke Menu Utama\n>> ";
         cin >> pilihan;
 
         switch (pilihan) {
