@@ -2,8 +2,7 @@
 #include <iomanip>
 #include <string>
 using namespace std;
-//pppppp
-/*kimochi*/
+
 const int maxx = 100;
 const int maxp = 100;
 
@@ -156,6 +155,30 @@ void melihatbuku(){
     }
 }
 
+void caribuku(){
+    string bukuCari;
+    bool ditemukan = false;
+
+    cout << "Masukan judul buku yang dicari : ";
+    getline(cin>> ws, bukuCari );
+
+    for (int i = 0; i < 100; i++)
+    {
+        if (jenisBuku[i].buku == bukuCari ){
+            cout << "Buku dengan judul " <<   bukuCari << " berada pada urutan ke-" 
+            << i +1 << endl;
+            cout << "Harga     : " << jenisBuku[i].harga << endl;
+            cout << "Deskripsi : " << jenisBuku[i].deskripsi << endl;
+        
+            ditemukan = true;
+        }
+    }
+    if(!ditemukan){
+        cout << "Buku tidak ditemukan" << endl;
+    }
+
+}
+
 void checkoutbuku() {
     if (JumlahPelanggan == 0) {
         cout << "Belum ada pesanan yang terdaftar..\n";
@@ -197,33 +220,89 @@ void checkoutbuku() {
     JumlahPelanggan--;
 }
 
-void admin() {
+void customer() {
+    char kembali;
+    int pilihan;
+    do {
+        system("cls");
+        cout << "\nMENU CUSTOMER\n";
+        cout << "1. Lihat Daftar Layanan\n2. Memilih menu layanan \n3. Melihat pesanan\n4. Checkout Pesanan\n5. Mencari buku\n6. Kembali ke Menu Utama\n>> ";
+        cin >> pilihan;
+
+        switch (pilihan) {
+        case 1: daftarbuku(); break;
+        case 2: memilihbuku(); break;
+        case 3: melihatbuku(); break;
+        case 4: checkoutbuku(); break;
+        case 5: caribuku();break;
+        case 6:
+            return; //kembali ke menu utama
+        default:
+            cout << "Pilihan tidak valid. Silakan coba lagi.\n";
+        }
+
+        do{
+        cout << "\nApakah mau kembali ke menu customer (Y/N)? ";
+        cin >> kembali;
+        if(kembali=='y'||kembali=='Y'){
+            mengulang=false;
+        }
+        else if(kembali == 'n'||kembali == 'N'){
+            cout<<"Kembali ke menu utama";
+            mengulang=false;
+        }
+        else{
+            mengulang=true;
+        }
+        }while(mengulang==true);
+    } while (kembali == 'Y' || kembali == 'y');
+}
+
+void admin(Admin adminku , int kesempatan) {
     char kembali;
     int pilihan;
     string username, password;
+    // x=3;
+    // do{
+    // cout << "\n=== LOGIN ADMIN ===" << endl;
+    // cout << "Username: ";
+    // cin >> username;
+    // cout << "Password: ";
+    // cin >> password;
 
-    x=3;
-    do{
+    // // Validasi login
+    // if (username == username && password == password) {
+    //     cout << "\nLogin berhasil! Selamat datang, Admin.\n";
+    //     mengulang=false;
+    // } else {
+    //     x--;mengulang=true;
+    //     cout << "\nLogin gagal! Username atau password salah.\n";
+    //     cout << "Anda memiliki "<<x<<" kesempatan lagi\n";
+    // }
+    // if(x==0){
+    //     cout<<"KESEMPATAN ANDA TELAH HABIS, KELUAR DARI PROGRAM!!!!!!\n";
+    //     exit(0);
+    // }
+    // }while(mengulang==true);
     cout << "\n=== LOGIN ADMIN ===" << endl;
     cout << "Username: ";
     cin >> username;
     cout << "Password: ";
     cin >> password;
 
-    // Validasi login
-    if (username == username && password == password) {
-        cout << "\nLogin berhasil! Selamat datang, Admin.\n";
-        mengulang=false;
-    } else {
-        x--;mengulang=true;
-        cout << "\nLogin gagal! Username atau password salah.\n";
-        cout << "Anda memiliki "<<x<<" kesempatan lagi\n";
-    }
-    if(x==0){
-        cout<<"KESEMPATAN ANDA TELAH HABIS, KELUAR DARI PROGRAM!!!!!!\n";
+    if(kesempatan == 0){
+        cout << "Kesempatan anda telah habis, anda keluar dari program!!";
         exit(0);
     }
-    }while(mengulang==true);
+
+    if (username == adminku.username && password == adminku.password) {
+        cout << "\nLogin berhasil! Selamat datang, Admin.\n";
+    } else {
+        cout << "\nLogin gagal! Username atau password salah.\n";
+        cout << "Anda memiliki " << (kesempatan - 1) << " kesempatan lagi.\n";
+        admin(adminku, kesempatan - 1);  // Panggil kembali fungsi admin() dengan kesempatan berkurang
+        return;
+    }
 
 
     do {
@@ -257,45 +336,11 @@ void admin() {
     } while (kembali == 'Y' || kembali == 'y');
 }
 
-void customer() {
-    char kembali;
-    int pilihan;
-    do {
-        system("cls");
-        cout << "\nMENU CUSTOMER\n";
-        cout << "1. Lihat Daftar Layanan\n2. Memilih menu layanan \n3. Melihat pesanan\n4. Checkout Pesanan\n5. Kembali ke Menu Utama\n>> ";
-        cin >> pilihan;
 
-        switch (pilihan) {
-        case 1: daftarbuku(); break;
-        case 2: memilihbuku(); break;
-        case 3: melihatbuku(); break;
-        case 4: checkoutbuku(); break;
-        case 5:
-            return; //kembali ke menu utama
-        default:
-            cout << "Pilihan tidak valid. Silakan coba lagi.\n";
-        }
-
-        do{
-        cout << "\nApakah mau kembali ke menu customer (Y/N)? ";
-        cin >> kembali;
-        if(kembali=='y'||kembali=='Y'){
-            mengulang=false;
-        }
-        else if(kembali == 'n'||kembali == 'N'){
-            cout<<"Kembali ke menu utama";
-            mengulang=false;
-        }
-        else{
-            mengulang=true;
-        }
-        }while(mengulang==true);
-    } while (kembali == 'Y' || kembali == 'y');
-}
 
 int main() {
     int pilihan;
+    Admin adminku;
     do {
         cout<<"\n       MAIN MENU\n";
         cout << "PILIH LOGIN SEBAGAI APA\n";
@@ -304,7 +349,7 @@ int main() {
 
         switch (pilihan) {
         case 1:
-            admin();
+            admin( adminku, 3);
             break;
         case 2:
             customer();
