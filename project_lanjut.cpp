@@ -47,6 +47,48 @@ bool mengulang;
 int x;
 
 void daftarbuku() {
+    
+    int pilihanbuku ;
+    do
+    {
+    cout << "\nPILIH SORTING HARGA" << endl ;
+    cout << "1. Termahal - Termurah" << endl ;
+    cout << "2. Termurah - Termahal" << endl ;
+    cout << "Pilih : " ;
+    cin >> pilihanbuku ;
+
+    if (pilihanbuku == 1)
+    {
+        for (int i = 0; i < jml - 1; i++) {
+            int maks = i;  
+            for (int j = i + 1; j < jml; j++) {  
+                if (jenisBuku[j].harga > jenisBuku[maks].harga) {  
+                    maks = j;
+                }
+            }
+            swap(jenisBuku[i], jenisBuku[maks]);
+        }
+    }
+    else if (pilihanbuku == 2)
+    {
+        for (int i = 0; i < jml - 1; i++) {
+            int min = i;  
+            for (int j = i + 1; j < jml; j++) {  
+                if (jenisBuku[j].harga < jenisBuku[min].harga) {  
+                    min = j;
+                }
+            }
+            swap(jenisBuku[i], jenisBuku[min]);
+        }
+    }
+    else
+    {
+        cout << "\nPilihan Tidak Valid !\n" ;
+    }
+    
+    } while (pilihanbuku != 1 && pilihanbuku != 2);
+    
+
     cout << "\nDAFTAR BUKU\n" << endl;
     cout << string(111, '-') << endl;
     cout << "| " << left << setw(3) << "NO." << " | " << setw(20) << "Judul buku   " << " | " << setw(15) << "Harga" << " | " << setw(60) << "Deskripsi" << " | " << endl;
