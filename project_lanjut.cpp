@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <string>
 using namespace std;
-//nyoba di branch sal
+
 const int maxx = 100;
 const int maxp = 100;
 
@@ -31,20 +31,64 @@ struct Pelanggan {
     int IdPelanggan;
     int nmrpesanan[maxx]; // Menyimpan layanan yang dipesan
     int Jumlahbuku;
-};Pelanggan pelanggan[maxp];
+};
 
+Pelanggan pelanggan[maxp];
 int JumlahPelanggan = 0;
 
 // Struktur untuk login admin
 struct Admin {
     string username = "admin";
     string password = "1234";
-};Admin admiin;
+};
 
+Admin admiin;
 bool mengulang;
 int x;
 
 void daftarbuku() {
+    
+    int pilihanbuku ;
+    do
+    {
+    cout << "\nPILIH SORTING HARGA" << endl ;
+    cout << "1. Termahal - Termurah" << endl ;
+    cout << "2. Termurah - Termahal" << endl ;
+    cout << "Pilih : " ;
+    cin >> pilihanbuku ;
+
+    if (pilihanbuku == 1)
+    {
+        for (int i = 0; i < jml - 1; i++) {
+            int maks = i;  
+            for (int j = i + 1; j < jml; j++) {  
+                if (jenisBuku[j].harga > jenisBuku[maks].harga) {  
+                    maks = j;
+                }
+            }
+            swap(jenisBuku[i], jenisBuku[maks]);
+        }
+    }
+    else if (pilihanbuku == 2)
+    {
+        for (int i = 0; i < jml - 1; i++) {
+            int min = i;  
+            for (int j = i + 1; j < jml; j++) {  
+                if (jenisBuku[j].harga < jenisBuku[min].harga) {  
+                    min = j;
+                }
+            }
+            swap(jenisBuku[i], jenisBuku[min]);
+        }
+    }
+    else
+    {
+        cout << "\nPilihan Tidak Valid !\n" ;
+    }
+    
+    } while (pilihanbuku != 1 && pilihanbuku != 2);
+    
+
     cout << "\nDAFTAR BUKU\n" << endl;
     cout << string(111, '-') << endl;
     cout << "| " << left << setw(3) << "NO." << " | " << setw(20) << "Judul buku   " << " | " << setw(15) << "Harga" << " | " << setw(60) << "Deskripsi" << " | " << endl;
@@ -153,7 +197,6 @@ void melihatbuku(){
     }
 }
 
-//searching
 void caribuku(){
     string bukuCari;
     bool ditemukan = false;
@@ -225,7 +268,7 @@ void customer() {
     do {
         system("cls");
         cout << "\nMENU CUSTOMER\n";
-        cout << "1. Lihat Daftar Buku\n2. Memilih menu Buku \n3. Melihat Buku\n4. Checkout Pesanan\n5. Mencari buku\n6. Kembali ke Menu Utama\n>> ";
+        cout << "1. Lihat Daftar Layanan\n2. Memilih menu layanan \n3. Melihat pesanan\n4. Checkout Pesanan\n5. Mencari buku\n6. Kembali ke Menu Utama\n>> ";
         cin >> pilihan;
 
         switch (pilihan) {
@@ -283,17 +326,16 @@ void admin(Admin adminku , int kesempatan) {
     //     exit(0);
     // }
     // }while(mengulang==true);
-
-    if(kesempatan == 0){//ngecek dulu kesempatannya 0 atau bukan, kalo iya bakal selesai/keluar program
-        cout << "Kesempatan anda telah habis, anda keluar dari program!!";
-        exit(0);
-    }
-    
     cout << "\n=== LOGIN ADMIN ===" << endl;
     cout << "Username: ";
     cin >> username;
     cout << "Password: ";
     cin >> password;
+
+    if(kesempatan == 0){
+        cout << "Kesempatan anda telah habis, anda keluar dari program!!";
+        exit(0);
+    }
 
     if (username == adminku.username && password == adminku.password) {
         cout << "\nLogin berhasil! Selamat datang, Admin.\n";
@@ -304,9 +346,10 @@ void admin(Admin adminku , int kesempatan) {
         return;
     }
 
+
     do {
         cout << "\nMENU ADMIN\n";
-        cout << "1. Lihat Daftar Buku\n2. Tambah Buku\n3. Edit Buku\n4. Hapus Buku\n5. Kembali ke Menu Utama\n>> ";
+        cout << "1. Lihat Daftar Layanan\n2. Tambah layanan\n3. Edit layanan\n4. Hapus layanan\n5. Kembali ke Menu Utama\n>> ";
         cin >> pilihan;
 
         switch (pilihan) {
