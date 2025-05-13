@@ -1,0 +1,24 @@
+Paket 1
+Potong Rambut+Keramas+pijat
+45000
+Paket 2
+Potong rambut+Jenggot
+35000
+Paket 3
+Potong rambut, Creambath, cat rambut dan hairstyle
+200000
+Potong rambut
+-
+30000
+Keramas + Pijat
+-
+20000
+Creambath 
+Perawatan rambut dengan mengoleskan krim khusus ke-rambut
+50000
+Cat rambut
+-
+50000
+k
+r
+2
