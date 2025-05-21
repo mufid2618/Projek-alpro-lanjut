@@ -1,6 +1,8 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 const int maxx = 100;
@@ -14,13 +16,13 @@ struct Buku {
 };
 
 Buku jenisBuku[maxx] = {
-    {"Harry Potter", "Petualangan penyihir muda di Hogwarts", 150000},
-    {"Lord of the Rings", "Perjalanan epik untuk menghancurkan cincin kekuasaan", 200000},
-    {"To Kill a Mockingbird", "Kisah tentang keadilan sosial dan rasisme", 120000},
-    {"1984", "Novel distopia tentang pengawasan pemerintah", 110000},
-    {"Pride and Prejudice", "Romansa klasik di era Victoria", 130000},
-    {"The Great Gatsby", "Kehidupan glamor dan tragedi di tahun 1920-an", 140000},
-    {"Moby Dick", "Pengejaran ikan paus legendaris", 125000}
+    // {"Harry Potter", "Petualangan penyihir muda di Hogwarts", 150000},
+    // {"Lord of the Rings", "Perjalanan epik untuk menghancurkan cincin kekuasaan", 200000},
+    // {"To Kill a Mockingbird", "Kisah tentang keadilan sosial dan rasisme", 120000},
+    // {"1984", "Novel distopia tentang pengawasan pemerintah", 110000},
+    // {"Pride and Prejudice", "Romansa klasik di era Victoria", 130000},
+    // {"The Great Gatsby", "Kehidupan glamor dan tragedi di tahun 1920-an", 140000},
+    // {"Moby Dick", "Pengejaran ikan paus legendaris", 125000}
 };
 
 int jml = 7;
@@ -47,7 +49,28 @@ bool mengulang;
 int x;
 
 void daftarbuku() {
-    
+    string nama_File, line, buku1, desk1, harga1;
+    Buku outputBuku[100];
+    ifstream File("data_buku.txt");
+    if (!File.is_open()) {
+            cout << "File tidak terbuka\n";
+            return;
+        }
+
+    int i = 0;
+    while (getline(File, line)) {
+        istringstream conv(line);
+        Buku temp;
+        getline(conv, buku1, ',');
+        getline(conv, desk1, ',');
+        getline(conv, harga1);
+
+        temp.buku = buku1;
+        temp.deskripsi = desk1;
+        temp.harga = stoi(harga1);
+        outputBuku[i++] = temp;
+    }
+    File.close();
     int pilihanbuku ;
     do
     {
@@ -62,11 +85,11 @@ void daftarbuku() {
         for (int i = 0; i < jml - 1; i++) {
             int maks = i;  
             for (int j = i + 1; j < jml; j++) {  
-                if (jenisBuku[j].harga > jenisBuku[maks].harga) {  
+                if (outputBuku[j].harga > outputBuku[maks].harga) {  
                     maks = j;
                 }
             }
-            swap(jenisBuku[i], jenisBuku[maks]);
+            swap(outputBuku[i], outputBuku[maks]);
         }
     }
     else if (pilihanbuku == 2)
@@ -74,11 +97,11 @@ void daftarbuku() {
         for (int i = 0; i < jml - 1; i++) {
             int min = i;  
             for (int j = i + 1; j < jml; j++) {  
-                if (jenisBuku[j].harga < jenisBuku[min].harga) {  
+                if (outputBuku[j].harga < outputBuku[min].harga) {  
                     min = j;
                 }
             }
-            swap(jenisBuku[i], jenisBuku[min]);
+            swap(outputBuku[i], outputBuku[min]);
         }
     }
     else
@@ -90,13 +113,13 @@ void daftarbuku() {
     
 
     cout << "\nDAFTAR BUKU\n" << endl;
-    cout << string(111, '-') << endl;
-    cout << "| " << left << setw(3) << "NO." << " | " << setw(20) << "Judul buku   " << " | " << setw(15) << "Harga" << " | " << setw(60) << "Deskripsi" << " | " << endl;
-    cout << string(111, '-') << endl;
+    cout << string(116, '-') << endl;
+    cout << "| " << left << setw(3) << "NO." << " | " << setw(25) << "Judul buku   " << " | " << setw(15) << "Harga" << " | " << setw(60) << "Deskripsi" << " | " << endl;
+    cout << string(116, '-') << endl;
     for (int i = 0; i < jml; i++) {
-        cout << "| " << left << setw(3) << i + 1 << " | " << setw(20) << jenisBuku[i].buku << " | " << setw(15) << jenisBuku[i].harga << " | " << setw(60) << jenisBuku[i].deskripsi << " | " << endl;
+        cout << "| " << left << setw(3) << i + 1 << " | " << setw(25) << outputBuku[i].buku << " | " << setw(15) << outputBuku[i].harga << " | " << setw(60) << outputBuku[i].deskripsi << " | " << endl;
     }
-    cout << string(111, '-') << endl;
+    cout << string(116, '-') << endl;
 }
 
 void tambahbuku() {
