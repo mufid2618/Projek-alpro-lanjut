@@ -1,7 +1,7 @@
-Harry Potter, Petualangan penyihir muda di Hogwarts,150000
-Lord of the Rings, Perjalanan epik untuk menghancurkan cincin kekuasaan,200000
-To Kill a Mockingbird, Kisah tentang keadilan sosial dan rasisme,120000
-1984, Novel distopia tentang pengawasan pemerintah,110000
-hujan,makna hujan ,100000
-The Great Gatsby, Kehidupan glamor dan tragedi di tahun 1920-an,140000
-Moby Dick, Pengejaran ikan paus legendaris,125000
+Harry Potter,Petualangan penyihir muda di Hogwarts,150000
+Lord of the Rings,Perjalanan epik untuk menghancurkan cincin kekuasaan,200000
+To Kill a Mockingbird,Kisah tentang keadilan sosial dan rasisme,120000
+1984,Novel distopia tentang pengawasan pemerintah,110000
+hujan,makna hujan,100000
+The Great Gatsby,Kehidupan glamor dan tragedi di tahun 1920-an,140000
+Moby Dick,Pengejaran ikan paus legendaris,125000
