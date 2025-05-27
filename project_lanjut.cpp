@@ -220,7 +220,7 @@ void hapusbuku()
      string data[100];
     int jumlah = 0;
 
-    // Buka dan tampilkan semua data buku
+
     ifstream file("data_buku.txt");
     if (!file.is_open()) {
         cout << "Gagal membuka file data_buku.txt\n";
