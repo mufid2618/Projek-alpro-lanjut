@@ -216,21 +216,49 @@ string nama_File, line, buku1, desk1, harga1;
     }
 }
 
-void hapusbuku() {
-    int nomor;
+void hapusbuku()
+{
     daftarbuku();
-    cout << "Masukkan nomor buku yang ingin dihapus: ";
-    cin >> nomor;
-    if (nomor > 0 && nomor <= jml) {
-        for (int i = nomor - 1; i < jml - 1; i++) {
-            jenisBuku[i] = jenisBuku[i + 1];
-        }
-        jml--;
-        cout << "Data buku berhasil dihapus!\n";
-    } else {
-        cout << "Nomor buku tidak valid!\n";
+    string data[100];
+    int jumlah = 0;
+
+    ifstream file("data_buku.txt");
+    if (!file.is_open()) {
+        cout << "Gagal membuka file data_buku.txt\n";
+        return;
     }
+
+    string baris;
+    while (getline(file, baris)) {
+        data[jumlah++] = baris; 
+    }
+    file.close();
+
+    if (jumlah == 0) {
+        cout << "Tidak ada buku untuk dihapus.\n";
+        return;
+    }
+
+    int pilih;
+    cout << "Masukkan nomor urutan buku yang ingin dihapus (1-" << jumlah << "): ";
+    cin >> pilih;
+
+    if (pilih < 1 || pilih > jumlah) {
+        cout << "Nomor tidak valid.\n";
+        return;
+    }
+
+    ofstream fileBaru("data_buku.txt");
+    for (int i = 0; i < jumlah; i++) {
+        if (i != (pilih - 1)) { 
+            fileBaru << data[i] << endl;
+        }
+    }
+    fileBaru.close();
+
+    cout << "Buku nomor " << pilih << " berhasil dihapus.\n";
 }
+
 void memilihbuku() {
     int jumlah;
     cout << "Pemesanan untuk berapa orang? ";
