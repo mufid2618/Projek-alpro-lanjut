@@ -16,9 +16,17 @@ struct Buku
     int harga;
 };
 
-Buku jenisBuku[maxx];
+Buku jenisBuku[maxx] = {
+    // {"Harry Potter", "Petualangan penyihir muda di Hogwarts", 150000},
+    // {"Lord of the Rings", "Perjalanan epik untuk menghancurkan cincin kekuasaan", 200000},
+    // {"To Kill a Mockingbird", "Kisah tentang keadilan sosial dan rasisme", 120000},
+    // {"1984", "Novel distopia tentang pengawasan pemerintah", 110000},
+    // {"Pride and Prejudice", "Romansa klasik di era Victoria", 130000},
+    // {"The Great Gatsby", "Kehidupan glamor dan tragedi di tahun 1920-an", 140000},
+    // {"Moby Dick", "Pengejaran ikan paus legendaris", 125000}
+};
 
-int jml = 0;
+int jml = 7;
 
 // Struktur untuk pelanggan
 struct Pelanggan
@@ -43,33 +51,6 @@ Admin admiin;
 bool mengulang;
 int x;
 
-void muatLayananDariFile() {
-    ifstream file("data_buku.txt");
-    if (!file) {
-        cout << "File layanan.txt tidak ditemukan. Menggunakan data default.\n";
-        return;
-    }
-
-    jml = 0;
-    while (getline(file, jenisBuku[jml].buku)) {
-        getline(file, jenisBuku[jml].deskripsi);
-        file >> jenisBuku[jml].harga;
-        file.ignore(); 
-        jml++;
-    }
-    file.close();
-}
-
-void simpanLayananKeFile() {
-    ofstream file("data_buku.txt");
-    for (int i = 0; i < jml; i++) {
-        file << jenisBuku[i].buku << endl;
-        file << jenisBuku[i].deskripsi << endl;
-        file << jenisBuku[i].harga << endl;
-    }
-    file.close();
-}
-
 void daftarbuku()
 {
     string nama_File, line, buku1, desk1, harga1;
@@ -93,52 +74,47 @@ void daftarbuku()
         temp.buku = buku1;
         temp.deskripsi = desk1;
         temp.harga = stoi(harga1);
-        outputBuku[i++] = temp;
+        outputBuku[i++] = temp;//ini tuh  outputBuku ke-i akan menunjuk temp, lalu i akan ditambah 1
     }
     File.close();
     int pilihanbuku;
     do
     {
-        cout << "\nPILIH SORTING HARGA" << endl;
-        cout << "1. Termahal - Termurah" << endl;
-        cout << "2. Termurah - Termahal" << endl;
-        cout << "Pilih : ";
-        cin >> pilihanbuku;
 
-        if (pilihanbuku == 1)
-        {
-            for (int i = 0; i < jml - 1; i++)
-            {
-                int maks = i;
-                for (int j = i + 1; j < jml; j++)
-                {
-                    if (outputBuku[j].harga > outputBuku[maks].harga)
-                    {
-                        maks = j;
-                    }
+    cout << "\nPILIH SORTING HARGA" << endl ;
+    cout << "1. Termahal - Termurah" << endl ;
+    cout << "2. Termurah - Termahal" << endl ;
+    cout << "Pilih : " ;
+    cin >> pilihanbuku ;
+
+    if (pilihanbuku == 1)
+    {
+        for (int d = 0; d < i - 1; d++) {
+            int maks = d;  
+            for (int j = d + 1; j < i; j++) {  
+                if (outputBuku[j].harga > outputBuku[maks].harga) {  
+                    maks = j;
                 }
-                swap(outputBuku[i], outputBuku[maks]);
             }
+            swap(outputBuku[d], outputBuku[maks]);
         }
-        else if (pilihanbuku == 2)
-        {
-            for (int i = 0; i < jml - 1; i++)
-            {
-                int min = i;
-                for (int j = i + 1; j < jml; j++)
-                {
-                    if (outputBuku[j].harga < outputBuku[min].harga)
-                    {
-                        min = j;
-                    }
-                }
-                swap(outputBuku[i], outputBuku[min]);
+    }
+    else if (pilihanbuku == 2)
+    {
+        for (int d = 0; d < i - 1; d++) {
+            int min = d;  
+            for (int j = d + 1; j < i; j++) {  
+                if (outputBuku[j].harga < outputBuku[min].harga) {  
+                    min = j;
+                }    
             }
+            swap(outputBuku[d], outputBuku[min]);
         }
-        else
-        {
-            cout << "\nPilihan Tidak Valid !\n";
-        }
+    }
+    else
+    {
+         cout << "\nPilihan Tidak Valid !\n";
+    }
 
     } while (pilihanbuku != 1 && pilihanbuku != 2);
 
@@ -147,37 +123,38 @@ void daftarbuku()
     cout << string(116, '-') << endl;
     cout << "| " << left << setw(3) << "NO." << " | " << setw(25) << "Judul buku   " << " | " << setw(15) << "Harga" << " | " << setw(60) << "Deskripsi" << " | " << endl;
     cout << string(116, '-') << endl;
-    for (int i = 0; i < jml; i++)
-    {
-        cout << "| " << left << setw(3) << i + 1 << " | " << setw(25) << outputBuku[i].buku << " | " << setw(15) << outputBuku[i].harga << " | " << setw(60) << outputBuku[i].deskripsi << " | " << endl;
+    for (int d = 0; d < i; d++) {
+        cout << "| " << left << setw(3) << d + 1 << " | " << setw(25) << outputBuku[d].buku << " | " << setw(15) << outputBuku[d].harga << " | " << setw(60) << outputBuku[d].deskripsi << " | " << endl;
     }
     cout << string(116, '-') << endl;
 }
 
-void tambahbuku()
-{
-    if (jml < maxx)
-    {
+
+void tambahbuku() {
+    Buku temp;
+    ofstream file("data_buku.txt",ios::app);
+    //tinggal kasih jika penyimpanan sudah lebih dari yang disediakan maka data maksimum yang tersedia juga dtitambahkan
+//     if (jml < maxx) {
+
         cout << "Masukkan Judul Buku      : ";
         cin.ignore();
-        getline(cin, jenisBuku[jml].buku);
-        cout << "Masukkan Harga Buku   : ";
-        cin >> jenisBuku[jml].harga;
+        getline(cin, temp.buku);
         cout << "Masukkan Deskripsi Buku : ";
         cin.ignore();
-        getline(cin, jenisBuku[jml].deskripsi);
-        jml++;
-        simpanLayananKeFile();
+        getline(cin, temp.deskripsi);
+        cout << "Masukkan Harga Buku   : ";
+        cin >> temp.harga;
         cout << "Data Buku berhasil ditambahkan!\n";
-    }
-    else
-    {
-        cout << "Kapasitas data buku penuh!\n";
-    }
+        file<<temp.buku<<","
+            <<temp.deskripsi<<","
+            <<temp.harga<<endl;
+        file.close();
+//     } else {
+//         cout << "Kapasitas data buku penuh!\n";
+//     }
 }
 
-void editbuku()
-{
+void editbuku() {
     string nama_File, line, buku1, desk1, harga1;
     Buku daftarBuku[100];
     int jumlahBuku = 0;
@@ -208,7 +185,7 @@ void editbuku()
 
     cout << "Masukkan nomor buku yang ingin di edit : ";
     cin >> nomor;
-    if (nomor > 0 && nomor <= jml)
+    if (nomor > 0 && nomor <= jumlahBuku)
     {
         cout << "Masukkan Buku Yang Baru      : ";
         cin.ignore();
@@ -218,7 +195,6 @@ void editbuku()
         cout << "Masukkan Deskripsi Buku Baru : ";
         cin.ignore();
         getline(cin, daftarBuku[nomor - 1].deskripsi);
-        simpanLayananKeFile();
         cout << "Data Buku berhasil diperbarui!\n";
 
         ofstream File("data_buku.txt");
@@ -241,24 +217,52 @@ void editbuku()
 
 void hapusbuku()
 {
-    int nomor;
-    daftarbuku();
+     string data[100];
+    int jumlah = 0;
+
+    // Buka dan tampilkan semua data buku
+    ifstream file("data_buku.txt");
+    if (!file.is_open()) {
+        cout << "Gagal membuka file data_buku.txt\n";
+        return;
+    }
+
+    string baris;
+    cout << "Daftar Buku:\n";
+    cout << string(116, '-') << endl;
+        cout << "| " << left << setw(3) << "NO." << " | " << setw(25) << "Judul buku   " << " | " << setw(15) << "Harga" << " | " << setw(60) << "Deskripsi" << " | " << endl;
+        cout << string(116, '-') << endl;
+    while (getline(file, baris)) {
+        cout << "| " << left << setw(3) << jumlah + 1 << " | " << setw(25) << baris << endl;
+        jumlah++;
+    }
+    file.close();
+
+    if (jumlah == 0) {
+        cout << "Tidak ada buku untuk dihapus.\n";
+        return;
+    }
+
+
+    int pilih;
     cout << "Masukkan nomor buku yang ingin dihapus: ";
-    cin >> nomor;
-    if (nomor > 0 && nomor <= jml)
-    {
-        for (int i = nomor - 1; i < jml - 1; i++)
-        {
-            jenisBuku[i] = jenisBuku[i + 1];
+    cin >> pilih;
+
+    if (pilih < 1 || pilih > jumlah) {
+        cout << "Nomor tidak valid.\n";
+        return;
+    }
+
+    // Tulis ulang file tanpa baris yang dipilih
+    ofstream fileBaru("data_buku.txt");
+    for (int i = 0; i < jumlah; i++) {
+        if (i != (pilih - 1)) {
+            fileBaru << data[i] << endl;
         }
-        jml--;
-        simpanLayananKeFile();
-        cout << "Data buku berhasil dihapus!\n";
     }
-    else
-    {
-        cout << "Nomor buku tidak valid!\n";
-    }
+    fileBaru.close();
+
+    cout << "Buku nomor " << pilih << " berhasil dihapus.\n";
 }
 void memilihbuku()
 {
