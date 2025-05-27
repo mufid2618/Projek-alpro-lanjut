@@ -68,7 +68,7 @@ void daftarbuku() {
         temp.buku = buku1;
         temp.deskripsi = desk1;
         temp.harga = stoi(harga1);
-        outputBuku[i++] = temp;
+        outputBuku[i++] = temp;//ini tuh  outputBuku ke-i akan menunjuk temp, lalu i akan ditambah 1
     }
     File.close();
     int pilihanbuku ;
@@ -82,26 +82,26 @@ void daftarbuku() {
 
     if (pilihanbuku == 1)
     {
-        for (int i = 0; i < jml - 1; i++) {
-            int maks = i;  
-            for (int j = i + 1; j < jml; j++) {  
+        for (int d = 0; d < i - 1; d++) {
+            int maks = d;  
+            for (int j = d + 1; j < i; j++) {  
                 if (outputBuku[j].harga > outputBuku[maks].harga) {  
                     maks = j;
                 }
             }
-            swap(outputBuku[i], outputBuku[maks]);
+            swap(outputBuku[d], outputBuku[maks]);
         }
     }
     else if (pilihanbuku == 2)
     {
-        for (int i = 0; i < jml - 1; i++) {
-            int min = i;  
-            for (int j = i + 1; j < jml; j++) {  
+        for (int d = 0; d < i - 1; d++) {
+            int min = d;  
+            for (int j = d + 1; j < i; j++) {  
                 if (outputBuku[j].harga < outputBuku[min].harga) {  
                     min = j;
                 }
             }
-            swap(outputBuku[i], outputBuku[min]);
+            swap(outputBuku[d], outputBuku[min]);
         }
     }
     else
@@ -116,27 +116,33 @@ void daftarbuku() {
     cout << string(116, '-') << endl;
     cout << "| " << left << setw(3) << "NO." << " | " << setw(25) << "Judul buku   " << " | " << setw(15) << "Harga" << " | " << setw(60) << "Deskripsi" << " | " << endl;
     cout << string(116, '-') << endl;
-    for (int i = 0; i < jml; i++) {
-        cout << "| " << left << setw(3) << i + 1 << " | " << setw(25) << outputBuku[i].buku << " | " << setw(15) << outputBuku[i].harga << " | " << setw(60) << outputBuku[i].deskripsi << " | " << endl;
+    for (int d = 0; d < i; d++) {
+        cout << "| " << left << setw(3) << d + 1 << " | " << setw(25) << outputBuku[d].buku << " | " << setw(15) << outputBuku[d].harga << " | " << setw(60) << outputBuku[d].deskripsi << " | " << endl;
     }
     cout << string(116, '-') << endl;
 }
 
 void tambahbuku() {
-    if (jml < maxx) {
+    Buku temp;
+    ofstream file("data_buku.txt",ios::app);
+    //tinggal kasih jika penyimpanan sudah lebih dari yang disediakan maka data maksimum yang tersedia juga dtitambahkan
+//     if (jml < maxx) {
         cout << "Masukkan Judul Buku      : ";
         cin.ignore();
-        getline(cin, jenisBuku[jml].buku);
-        cout << "Masukkan Harga Buku   : ";
-        cin >> jenisBuku[jml].harga;
+        getline(cin, temp.buku);
         cout << "Masukkan Deskripsi Buku : ";
         cin.ignore();
-        getline(cin, jenisBuku[jml].deskripsi);
-        jml++;
+        getline(cin, temp.deskripsi);
+        cout << "Masukkan Harga Buku   : ";
+        cin >> temp.harga;
         cout << "Data Buku berhasil ditambahkan!\n";
-    } else {
-        cout << "Kapasitas data buku penuh!\n";
-    }
+        file<<temp.buku<<","
+            <<temp.deskripsi<<","
+            <<temp.harga<<endl;
+        file.close();
+//     } else {
+//         cout << "Kapasitas data buku penuh!\n";
+//     }
 }
 
 void editbuku() {
