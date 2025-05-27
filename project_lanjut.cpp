@@ -253,7 +253,6 @@ void hapusbuku()
         return;
     }
 
-    // Tulis ulang file tanpa baris yang dipilih
     ofstream fileBaru("data_buku.txt");
     for (int i = 0; i < jumlah; i++) {
         if (i != (pilih - 1)) {
