@@ -70,46 +70,57 @@ void daftarbuku() {
         temp.harga = stoi(harga1);
         outputBuku[i++] = temp;//ini tuh  outputBuku ke-i akan menunjuk temp, lalu i akan ditambah 1
     }
-    File.close();
-    int pilihanbuku ;
-    do
-    {
-    cout << "\nPILIH SORTING HARGA" << endl ;
-    cout << "1. Termahal - Termurah" << endl ;
-    cout << "2. Termurah - Termahal" << endl ;
-    cout << "Pilih : " ;
-    cin >> pilihanbuku ;
+    File.close();    char lihatAsli;
+    cout << "\nTampilkan daftar asli (tanpa sorting)? (y/n): ";
+    cin >> lihatAsli;
 
-    if (pilihanbuku == 1)
+    if (tolower(lihatAsli) == 'n')
     {
-        for (int d = 0; d < i - 1; d++) {
-            int maks = d;  
-            for (int j = d + 1; j < i; j++) {  
-                if (outputBuku[j].harga > outputBuku[maks].harga) {  
-                    maks = j;
+        int pilihanbuku;
+        do
+        {
+            cout << "\nPILIH SORTING HARGA" << endl;
+            cout << "1. Termahal - Termurah" << endl;
+            cout << "2. Termurah - Termahal" << endl;
+            cout << "Pilih : ";
+            cin >> pilihanbuku;
+
+            if (pilihanbuku == 1)
+            {
+                for (int d = 0; d < i - 1; d++)
+                {
+                    int maks = d;
+                    for (int j = d + 1; j < i; j++)
+                    {
+                        if (outputBuku[j].harga > outputBuku[maks].harga)
+                        {
+                            maks = j;
+                        }
+                    }
+                    swap(outputBuku[d], outputBuku[maks]);
                 }
             }
-            swap(outputBuku[d], outputBuku[maks]);
-        }
-    }
-    else if (pilihanbuku == 2)
-    {
-        for (int d = 0; d < i - 1; d++) {
-            int min = d;  
-            for (int j = d + 1; j < i; j++) {  
-                if (outputBuku[j].harga < outputBuku[min].harga) {  
-                    min = j;
+            else if (pilihanbuku == 2)
+            {
+                for (int d = 0; d < i - 1; d++)
+                {
+                    int min = d;
+                    for (int j = d + 1; j < i; j++)
+                    {
+                        if (outputBuku[j].harga < outputBuku[min].harga)
+                        {
+                            min = j;
+                        }
+                    }
+                    swap(outputBuku[d], outputBuku[min]);
                 }
             }
-            swap(outputBuku[d], outputBuku[min]);
-        }
+            else
+            {
+                cout << "\nPilihan Tidak Valid!\n";
+            }
+        } while (pilihanbuku != 1 && pilihanbuku != 2);
     }
-    else
-    {
-        cout << "\nPilihan Tidak Valid !\n" ;
-    }
-    
-    } while (pilihanbuku != 1 && pilihanbuku != 2);
     
 
     cout << "\nDAFTAR BUKU\n" << endl;
