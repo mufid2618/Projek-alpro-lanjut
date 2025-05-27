@@ -146,22 +146,63 @@ void tambahbuku() {
 }
 
 void editbuku() {
-    int nomor;
+string nama_File, line, buku1, desk1, harga1;
+    Buku daftarBuku[100];
+    int jumlahBuku = 0;
+
+    ifstream File("data_buku.txt");
+    if (!File.is_open())
+    {
+        cout << "File tidak terbuka\n";
+        return;
+    }
+
+    while (getline(File, line))
+    {
+        istringstream bacabaris(line);
+        getline(bacabaris, buku1, ',');
+        getline(bacabaris, desk1, ',');
+        getline(bacabaris, harga1);
+        daftarBuku[jumlahBuku].buku = buku1;
+        daftarBuku[jumlahBuku].deskripsi = desk1;
+        daftarBuku[jumlahBuku].harga = stoi(harga1);
+        jumlahBuku++;
+    }
+    File.close();
+
     daftarbuku();
-    cout << "Masukkan nomor layanan yang ingin di edit : ";
+
+    int nomor;
+
+    cout << "Masukkan nomor buku yang ingin di edit : ";
     cin >> nomor;
-    if (nomor > 0 && nomor <= jml) {
-        cout << "Masukkan Layanan Yang Baru      : ";
+    if (nomor > 0 && nomor <= jumlahBuku)
+    {
+        cout << "Masukkan Buku Yang Baru      : ";
         cin.ignore();
-        getline(cin, jenisBuku[nomor - 1].buku);
-        cout << "Masukkan Harga Layanan Baru     : ";
-        cin >> jenisBuku[nomor - 1].harga;
-        cout << "Masukkan Deskripsi Layanan Baru : ";
+        getline(cin, daftarBuku[nomor - 1].buku);
+        cout << "Masukkan Harga Buku Baru     : ";
+        cin >> daftarBuku[nomor - 1].harga;
+        cout << "Masukkan Deskripsi Buku Baru : ";
         cin.ignore();
-        getline(cin, jenisBuku[nomor - 1].deskripsi);
-        cout << "Data layanan berhasil diperbarui!\n";
-    } else {
-        cout << "Nomor layanan tidak valid!\n";
+        getline(cin, daftarBuku[nomor - 1].deskripsi);
+        cout << "Data Buku berhasil diperbarui!\n";
+
+        ofstream File("data_buku.txt");
+        if (!File.is_open()) {
+            cout << "Gagal membuka file untuk menulis.\n";
+            return;
+        }
+        for (int i = 0; i < jumlahBuku; i++) {
+            File << daftarBuku[i].buku << ","
+                    << daftarBuku[i].deskripsi << ","
+                    << daftarBuku[i].harga << endl;
+        }
+        File.close();
+    }
+    else
+    {
+        cout << "Nomor buku tidak valid!\n";
     }
 }
 
